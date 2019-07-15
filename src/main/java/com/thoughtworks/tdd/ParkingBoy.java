@@ -21,7 +21,7 @@ public class ParkingBoy {
 
     public Ticket park(Car car) throws Exception{
         List<ParkingLot> parkingLotByCarExist = parkingLots.stream()
-                .filter(x -> x.getParkingCarTicket().containsValue(car))
+                .filter(x -> x.getParkingCarTicketContainsValue(car))
                 .collect(Collectors.toList());
         List<ParkingLot> parkingLotByParkCar = parkingLots.stream()
                 .filter(x -> x.getParkedQuantity() < x.getCapacity())
@@ -35,7 +35,7 @@ public class ParkingBoy {
 
     public Car fetch(Ticket ticket) throws Exception{
         List<ParkingLot> parkingLotByCar = parkingLots.stream()
-                .filter(x -> x.getParkingCarTicket().containsKey(ticket))
+                .filter(x -> x.getParkingCarTicketContainsKey(ticket))
                 .collect(Collectors.toList());
         if (ticket == null) {
             throw new NoTicketProvideException("Please provide your parking ticket.");

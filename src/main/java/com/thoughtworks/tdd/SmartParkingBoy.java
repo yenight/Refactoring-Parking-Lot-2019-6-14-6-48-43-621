@@ -14,7 +14,7 @@ public class SmartParkingBoy extends ParkingBoy{
     @Override
     public Ticket park(Car car) throws NotPositionEnoughException {
         List<ParkingLot> parkingLotByCarExist = this.getParkingLots().stream()
-                .filter(x -> x.getParkingCarTicket().containsValue(car))
+                .filter(x -> x.getParkingCarTicketContainsValue(car))
                 .collect(Collectors.toList());
         int minQuantity = this.getParkingLots().stream()
                 .filter(x -> x.getParkedQuantity() < x.getCapacity())

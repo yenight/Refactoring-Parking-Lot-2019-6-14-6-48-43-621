@@ -21,8 +21,12 @@ public class ParkingLot {
         return capacity;
     }
 
-    public HashMap<Ticket, Car> getParkingCarTicket() {
-        return parkingCarTicket;
+    public boolean getParkingCarTicketContainsValue(Car car) {
+        return parkingCarTicket.containsValue(car);
+    }
+
+    public boolean getParkingCarTicketContainsKey(Ticket ticket) {
+        return parkingCarTicket.containsKey(ticket);
     }
 
     public int getParkedQuantity() {
