@@ -15,15 +15,17 @@ public class ParkingBoyTest {
     public void should_return_car_when_park_car_to_parking_lot_then_get_it_back() throws Exception {
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         Ticket ticket = parkingBoy.park(car);
-
         Car fetchCar = parkingBoy.fetch(ticket);
+
         //then
         assertSame(car, fetchCar);
     }
@@ -31,79 +33,79 @@ public class ParkingBoyTest {
     @Test
     public void should_return_cars_when_park_cars_to_parking_lot_then_get_them_back() throws Exception {
         //given
-        Car firstCar = new Car();
-        Car secondCar = new Car();
+        Car car = new Car();
 
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
-        Ticket firstTicket = parkingBoy.park(firstCar);
-        Car fetchFirstCar = parkingBoy.fetch(firstTicket);
+        Ticket ticket = parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(ticket);
 
-        Ticket secondTicket = parkingBoy.park(secondCar);
-        Car fetchSecondCar = parkingBoy.fetch(secondTicket);
         //then
-        assertSame(firstCar, fetchFirstCar);
-        assertSame(secondCar, fetchSecondCar);
+        assertSame(car, fetchCar);
     }
 
     @Test
     public void should_not_fetch_cars_when_ticket_is_wrong() throws Exception{
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
         Ticket wrongTicket = new Ticket();
-        wrongTicket.setWrong(true);
+
         //when
+        wrongTicket.setWrong(true);
         parkingBoy.park(car);
 
         //then
-        assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(wrongTicket);
-        });
+        assertThrows(Exception.class, () -> parkingBoy.fetch(wrongTicket));
     }
 
     @Test
     public void should_not_fetch_cars_when_ticket_is_used() throws Exception {
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
         Ticket hadUsedTicket = new Ticket();
-        hadUsedTicket.setUsed(true);
+
         //when
+        hadUsedTicket.setUsed(true);
         parkingBoy.park(car);
 
         //then
-        assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(hadUsedTicket);
-        });
+        assertThrows(Exception.class, () -> parkingBoy.fetch(hadUsedTicket));
     }
 
     @Test
     public void should_not_get_ticket_when_no_position_park_car() throws Exception{
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         parkingLot.setParkedQuantity(10);
 
         //then
-        assertThrows(Exception.class, () -> {
-            parkingBoy.park(car);
-        });
+        assertThrows(Exception.class, () -> parkingBoy.park(car));
     }
 
     @Test
@@ -112,24 +114,25 @@ public class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         parkingLot.setParkedQuantity(10);
 
         //then
-        assertThrows(Exception.class, () -> {
-            parkingBoy.park(null);
-        });
+        assertThrows(Exception.class, () -> parkingBoy.park(null));
     }
 
     @Test
     public void should_not_get_ticket_when_park_a_parking_lot_car() throws Exception {
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
@@ -137,9 +140,7 @@ public class ParkingBoyTest {
         parkingBoy.park(car);
 
         //then
-        assertThrows(Exception.class, () -> {
-            parkingBoy.park(car);
-        });
+        assertThrows(Exception.class, () -> parkingBoy.park(car));
     }
 
     //story2
@@ -155,42 +156,54 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         Ticket wrongTicket = new Ticket();
-        wrongTicket.setUsed(true);
-
-        Ticket wrongSecondTicket = new Ticket();
-        wrongSecondTicket.setWrong(true);
 
         //when
+        wrongTicket.setWrong(true);
         parkingBoy.park(car);
+
         //then
-
-        Throwable exception = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(wrongTicket);
-        });
+        Throwable exception = assertThrows(Exception.class, () -> parkingBoy.fetch(wrongTicket));
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
+    }
 
-        Throwable secondException = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(wrongSecondTicket);
-        });
-        assertEquals("Unrecognized parking ticket.", secondException.getMessage());
+    @Test
+    public void should_not_fetch_cars_and_get_a_message_when_ticket_is_used() throws Exception {
+        //given
+        Car car = new Car();
+
+        ParkingLot parkingLot = new ParkingLot();
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+        Ticket wrongTicket = new Ticket();
+
+        //when
+        wrongTicket.setUsed(true);
+        parkingBoy.park(car);
+
+        //then
+        Throwable exception = assertThrows(Exception.class, () -> parkingBoy.fetch(wrongTicket));
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
     @Test
     public void should_not_fetch_cars_and_get_a_message_when_not_provide_ticket() throws Exception {
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         parkingBoy.park(car);
 
         //then
-        Throwable secondException = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(null);
-        });
+        Throwable secondException = assertThrows(Exception.class, () -> parkingBoy.fetch(null));
         assertEquals("Please provide your parking ticket.", secondException.getMessage());
     }
 
@@ -198,18 +211,18 @@ public class ParkingBoyTest {
     public void should_not_park_cars_and_get_a_message_when_parking_lot_is_fulled() throws Exception {
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
+
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         parkingLot.setParkedQuantity(10);
 
         //then
-        Throwable exception = assertThrows(Exception.class, () -> {
-            parkingBoy.park(car);
-        });
+        Throwable exception = assertThrows(Exception.class, () -> parkingBoy.park(car));
         assertEquals("Not enough position.", exception.getMessage());
     }
 
@@ -256,9 +269,7 @@ public class ParkingBoyTest {
         parkingSecondLot.setParkedQuantity(10);
 
         //then
-        Throwable exception = assertThrows(Exception.class, () -> {
-            parkingBoy.park(car);
-        });
+        Throwable exception = assertThrows(Exception.class, () -> parkingBoy.park(car));
         assertEquals("Not enough position.", exception.getMessage());
     }
 
@@ -299,9 +310,6 @@ public class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         ParkingLot parkingSecondLot = new ParkingLot();
         ParkingLot parkingThridLot = new ParkingLot();
-        parkingLot.setParkedQuantity(7);
-        parkingSecondLot.setParkedQuantity(5);
-        parkingThridLot.setParkedQuantity(10);
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
@@ -311,12 +319,13 @@ public class ParkingBoyTest {
         SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLots);
 
         //when
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
         parkingBoy.park(car);
 
         //then
-        Throwable exception = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(null);
-        });
+        Throwable exception = assertThrows(Exception.class, () -> parkingBoy.fetch(null));
         assertEquals("Please provide your parking ticket.", exception.getMessage());
     }
 
@@ -357,9 +366,6 @@ public class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot(20);
         ParkingLot parkingSecondLot = new ParkingLot(15);
         ParkingLot parkingThridLot = new ParkingLot();
-        parkingLot.setParkedQuantity(7);
-        parkingSecondLot.setParkedQuantity(5);
-        parkingThridLot.setParkedQuantity(10);
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
@@ -369,11 +375,12 @@ public class ParkingBoyTest {
         SuperSmartParkingBoy parkingBoy = new SuperSmartParkingBoy(parkingLots);
 
         Ticket wrongTicket = new Ticket();
-        wrongTicket.setUsed(true);
-        Ticket wrongSecondTicket = new Ticket();
-        wrongSecondTicket.setWrong(true);
 
         //when
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+        wrongTicket.setWrong(true);
         parkingBoy.park(car);
 
         //then
@@ -381,11 +388,38 @@ public class ParkingBoyTest {
             parkingBoy.fetch(wrongTicket);
         });
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
+    }
 
-        Throwable secondException = assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(wrongSecondTicket);
+    @Test
+    public void should_not_fetch_cars_and_get_a_message_when_ticket_is_used_and_have_many_parking_lots() throws Exception {
+        //given
+        Car car = new Car();
+
+        ParkingLot parkingLot = new ParkingLot(20);
+        ParkingLot parkingSecondLot = new ParkingLot(15);
+        ParkingLot parkingThridLot = new ParkingLot();
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+        parkingLots.add(parkingThridLot);
+
+        SuperSmartParkingBoy parkingBoy = new SuperSmartParkingBoy(parkingLots);
+
+        Ticket wrongTicket = new Ticket();
+
+        //when
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+        wrongTicket.setUsed(true);
+        parkingBoy.park(car);
+
+        //then
+        Throwable exception = assertThrows(Exception.class, () -> {
+            parkingBoy.fetch(wrongTicket);
         });
-        assertEquals("Unrecognized parking ticket.", secondException.getMessage());
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
     //story6
@@ -397,9 +431,6 @@ public class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot(20);
         ParkingLot parkingSecondLot = new ParkingLot(15);
         ParkingLot parkingThridLot = new ParkingLot();
-        parkingLot.setParkedQuantity(7);
-        parkingSecondLot.setParkedQuantity(5);
-        parkingThridLot.setParkedQuantity(10);
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
@@ -426,8 +457,13 @@ public class ParkingBoyTest {
         ParkingManager manager = new ParkingManager(parkingLots, parkingBoys);
 
         //when
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+
         Ticket ticket = manager.callParkingBoyParkCar(parkingBoy, car);
         Car fetchCar = manager.callParkingBoyFetchCar(parkingBoy, ticket);
+
         //then
         assertSame(car, fetchCar);
     }
@@ -456,17 +492,20 @@ public class ParkingBoyTest {
         ParkingManager manager = new ParkingManager(parkingLots, parkingBoys);
 
         //when
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+
         Ticket ticket = manager.park(car);
         Car fetchCar = manager.fetch(ticket);
+
         //then
         assertSame(car, fetchCar);
     }
 
     @Test
-    public void should_not_fetch_car_and_get_message_when_manager_call_parking_boy_parks_car() throws Exception {
+    public void should_not_fetch_car_and_get_message_when_manager_call_parking_boy_parks_car_and_no_position_to_park_car() throws Exception {
         //given
-        Car car = new Car();
-
         ParkingLot parkingLot = new ParkingLot(20);
         ParkingLot parkingSecondLot = new ParkingLot(15);
         ParkingLot parkingThridLot = new ParkingLot();
@@ -475,22 +514,16 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot);
         parkingLots.add(parkingSecondLot);
 
-        List<ParkingLot> smartParkingLots = new ArrayList<>();
-        smartParkingLots.add(parkingSecondLot);
-        smartParkingLots.add(parkingThridLot);
-
         List<ParkingLot> superParkingLots = new ArrayList<>();
         superParkingLots.add(parkingLot);
         superParkingLots.add(parkingSecondLot);
         superParkingLots.add(parkingThridLot);
 
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(smartParkingLots);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(superParkingLots);
 
         List<ParkingBoy> parkingBoys = new ArrayList<>();
         parkingBoys.add(parkingBoy);
-        parkingBoys.add(smartParkingBoy);
         parkingBoys.add(superSmartParkingBoy);
 
         ParkingManager manager = new ParkingManager(parkingLots, parkingBoys);
@@ -505,7 +538,35 @@ public class ParkingBoyTest {
             manager.callParkingBoyParkCar(parkingBoy, null);
         });
         assertEquals("Not enough position.", exception.getMessage());
+    }
 
+    @Test
+    public void should_not_fetch_car_and_get_message_when_manager_call_parking_boy_parks_car_and_no_ticket_provide() throws Exception {
+        //given
+        ParkingLot parkingLot = new ParkingLot(20);
+        ParkingLot parkingSecondLot = new ParkingLot(15);
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+
+        List<ParkingLot> smartParkingLots = new ArrayList<>();
+        smartParkingLots.add(parkingSecondLot);
+
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(smartParkingLots);
+
+        List<ParkingBoy> parkingBoys = new ArrayList<>();
+        parkingBoys.add(parkingBoy);
+        parkingBoys.add(smartParkingBoy);
+
+        ParkingManager manager = new ParkingManager(parkingLots, parkingBoys);
+
+        //when
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+
+        //then
         Throwable secondException = assertThrows(Exception.class, () -> {
             manager.callParkingBoyFetchCar(parkingBoy, null);
         });
