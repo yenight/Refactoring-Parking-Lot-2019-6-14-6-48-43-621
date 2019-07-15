@@ -65,12 +65,10 @@ public class SuperParkingBoyTest {
 
         ParkingLot parkingLot = new ParkingLot(20);
         ParkingLot parkingSecondLot = new ParkingLot(15);
-        ParkingLot parkingThirdLot = new ParkingLot();
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
         parkingLots.add(parkingSecondLot);
-        parkingLots.add(parkingThirdLot);
 
         SuperSmartParkingBoy parkingBoy = new SuperSmartParkingBoy(parkingLots);
 
@@ -79,7 +77,6 @@ public class SuperParkingBoyTest {
         //when
         parkingLot.setParkedQuantity(7);
         parkingSecondLot.setParkedQuantity(5);
-        parkingThirdLot.setParkedQuantity(10);
         wrongTicket.setTicketWrong(true);
         parkingBoy.park(car);
 
@@ -96,13 +93,11 @@ public class SuperParkingBoyTest {
         Car car = new Car();
 
         ParkingLot parkingLot = new ParkingLot(20);
-        ParkingLot parkingSecondLot = new ParkingLot(15);
-        ParkingLot parkingThirdLot = new ParkingLot();
+        ParkingLot parkingSecondLot = new ParkingLot();
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
         parkingLots.add(parkingSecondLot);
-        parkingLots.add(parkingThirdLot);
 
         SuperSmartParkingBoy parkingBoy = new SuperSmartParkingBoy(parkingLots);
 
@@ -110,8 +105,7 @@ public class SuperParkingBoyTest {
 
         //when
         parkingLot.setParkedQuantity(7);
-        parkingSecondLot.setParkedQuantity(5);
-        parkingThirdLot.setParkedQuantity(10);
+        parkingSecondLot.setParkedQuantity(10);
         wrongTicket.setTicketUsed(true);
         parkingBoy.park(car);
 
