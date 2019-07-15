@@ -1,5 +1,7 @@
 package com.thoughtworks.tdd;
 
+import com.thoughtworks.tdd.Exception.NotPositionEnoughException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +12,7 @@ public class SuperSmartParkingBoy extends ParkingBoy{
     }
 
     @Override
-    public Ticket park(Car car) {
+    public Ticket park(Car car) throws NotPositionEnoughException {
         List<ParkingLot> parkingLotByCarExist = this.getParkingLots().stream()
                 .filter(x -> x.getParkingCarTicket().containsValue(car))
                 .collect(Collectors.toList());
@@ -23,7 +25,7 @@ public class SuperSmartParkingBoy extends ParkingBoy{
         if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
             return parkingLotByParkCar.get(0).park(car);
         } else {
-            return null;
+            throw new NotPositionEnoughException("Not enough position.");
         }
     }
 }
