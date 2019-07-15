@@ -1,5 +1,9 @@
 package com.thoughtworks.tdd;
 
+import com.thoughtworks.tdd.Exception.NoTicketProvideException;
+import com.thoughtworks.tdd.Exception.NotPositionEnoughException;
+import com.thoughtworks.tdd.Exception.UnrecognizedTicketException;
+
 import java.rmi.server.ExportException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +30,7 @@ public class ParkingBoy {
         if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
             return parkingLotByParkCar.get(0).park(car);
         } else {
-            throw new Exception("Not enough position.");
+            throw new NotPositionEnoughException("Not enough position.");
         }
     }
 
@@ -34,27 +38,12 @@ public class ParkingBoy {
         List<ParkingLot> parkingLotByCar = parkingLots.stream()
                 .filter(x -> x.getParkingCarTicket().containsKey(ticket))
                 .collect(Collectors.toList());
-
         if (ticket == null) {
-            throw new Exception("Please provide your parking ticket.");
+            throw new NoTicketProvideException("Please provide your parking ticket.");
         } else if (ticket.isWrong() || ticket.isUsed()){
-            throw new Exception("Unrecognized parking ticket.");
+            throw new UnrecognizedTicketException("Unrecognized parking ticket.");
         } else {
             return parkingLotByCar.get(0).getCar(ticket);
         }
-    }
-
-    public String giveFetchMessage(Ticket ticket) {
-        if (ticket == null) return "Please provide your parking ticket.";
-        if (ticket.isWrong() || ticket.isUsed()) {
-            return "Unrecognized parking ticket.";
-        } else {
-            return "Right";
-        }
-    }
-
-    public String giveParkMessage(Ticket ticket) {
-        if (ticket == null) return "Not enough position.";
-        return "Right";
     }
 }
