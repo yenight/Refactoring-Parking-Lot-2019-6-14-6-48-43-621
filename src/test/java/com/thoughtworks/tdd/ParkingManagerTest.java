@@ -15,7 +15,7 @@ public class ParkingManagerTest {
 
         ParkingLot parkingLot = new ParkingLot(20);
         ParkingLot parkingSecondLot = new ParkingLot(15);
-        ParkingLot parkingThridLot = new ParkingLot();
+        ParkingLot parkingThirdLot = new ParkingLot();
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
@@ -23,12 +23,12 @@ public class ParkingManagerTest {
 
         List<ParkingLot> smartParkingLots = new ArrayList<>();
         smartParkingLots.add(parkingSecondLot);
-        smartParkingLots.add(parkingThridLot);
+        smartParkingLots.add(parkingThirdLot);
 
         List<ParkingLot> superParkingLots = new ArrayList<>();
         superParkingLots.add(parkingLot);
         superParkingLots.add(parkingSecondLot);
-        superParkingLots.add(parkingThridLot);
+        superParkingLots.add(parkingThirdLot);
 
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(smartParkingLots);
@@ -44,7 +44,7 @@ public class ParkingManagerTest {
         //when
         parkingLot.setParkedQuantity(7);
         parkingSecondLot.setParkedQuantity(5);
-        parkingThridLot.setParkedQuantity(10);
+        parkingThirdLot.setParkedQuantity(10);
 
         Ticket ticket = manager.callParkingBoyParkCar(parkingBoy, car);
         Car fetchCar = manager.callParkingBoyFetchCar(parkingBoy, ticket);
@@ -60,10 +60,10 @@ public class ParkingManagerTest {
 
         ParkingLot parkingLot = new ParkingLot(20);
         ParkingLot parkingSecondLot = new ParkingLot(15);
-        ParkingLot parkingThridLot = new ParkingLot();
+        ParkingLot parkingThirdLot = new ParkingLot();
         parkingLot.setParkedQuantity(7);
         parkingSecondLot.setParkedQuantity(5);
-        parkingThridLot.setParkedQuantity(10);
+        parkingThirdLot.setParkedQuantity(10);
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
@@ -79,7 +79,7 @@ public class ParkingManagerTest {
         //when
         parkingLot.setParkedQuantity(7);
         parkingSecondLot.setParkedQuantity(5);
-        parkingThridLot.setParkedQuantity(10);
+        parkingThirdLot.setParkedQuantity(10);
 
         Ticket ticket = manager.park(car);
         Car fetchCar = manager.fetch(ticket);
@@ -93,7 +93,7 @@ public class ParkingManagerTest {
         //given
         ParkingLot parkingLot = new ParkingLot(20);
         ParkingLot parkingSecondLot = new ParkingLot(15);
-        ParkingLot parkingThridLot = new ParkingLot();
+        ParkingLot parkingThirdLot = new ParkingLot();
 
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
@@ -102,7 +102,7 @@ public class ParkingManagerTest {
         List<ParkingLot> superParkingLots = new ArrayList<>();
         superParkingLots.add(parkingLot);
         superParkingLots.add(parkingSecondLot);
-        superParkingLots.add(parkingThridLot);
+        superParkingLots.add(parkingThirdLot);
 
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(superParkingLots);
@@ -116,7 +116,7 @@ public class ParkingManagerTest {
         //when
         parkingLot.setParkedQuantity(7);
         parkingSecondLot.setParkedQuantity(5);
-        parkingThridLot.setParkedQuantity(10);
+        parkingThirdLot.setParkedQuantity(10);
 
         //then
         Throwable exception = assertThrows(Exception.class, () -> {

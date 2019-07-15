@@ -4,7 +4,6 @@ import com.thoughtworks.tdd.Exception.NoTicketProvideException;
 import com.thoughtworks.tdd.Exception.NotPositionEnoughException;
 import com.thoughtworks.tdd.Exception.UnrecognizedTicketException;
 
-import java.rmi.server.ExportException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +39,7 @@ public class ParkingBoy {
                 .collect(Collectors.toList());
         if (ticket == null) {
             throw new NoTicketProvideException("Please provide your parking ticket.");
-        } else if (ticket.isWrong() || ticket.isUsed()){
+        } else if (ticket.isTicketWrong() || ticket.isTicketUsed()){
             throw new UnrecognizedTicketException("Unrecognized parking ticket.");
         } else {
             return parkingLotByCar.get(0).getCar(ticket);

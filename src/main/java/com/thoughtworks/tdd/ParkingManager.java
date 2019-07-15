@@ -10,10 +10,6 @@ public class ParkingManager extends ParkingBoy{
         this.parkingBoyList = parkingBoyList;
     }
 
-    public List<ParkingBoy> getParkingBoyList() {
-        return parkingBoyList;
-    }
-
     public Ticket callParkingBoyParkCar(ParkingBoy parkingBoy, Car car) throws Exception {
         return parkingBoy.park(car);
     }

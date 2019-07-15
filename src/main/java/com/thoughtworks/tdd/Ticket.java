@@ -1,22 +1,22 @@
 package com.thoughtworks.tdd;
 
 public class Ticket {
-    private boolean isUsed = false;
-    private boolean isWrong = false;
+    private boolean isTicketUsed = false;
+    private boolean isTicketWrong = false;
 
-    public boolean isUsed() {
-        return isUsed;
+    public boolean isTicketUsed() {
+        return isTicketUsed;
     }
 
-    public void setUsed(boolean used) {
-        isUsed = used;
+    public void setTicketUsed(boolean ticketUsed) {
+        isTicketUsed = ticketUsed;
     }
 
-    public boolean isWrong() {
-        return isWrong;
+    public boolean isTicketWrong() {
+        return isTicketWrong;
     }
 
-    public void setWrong(boolean wrong) {
-        isWrong = wrong;
+    public void setTicketWrong(boolean ticketWrong) {
+        isTicketWrong = ticketWrong;
     }
 }

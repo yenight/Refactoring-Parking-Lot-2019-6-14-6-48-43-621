@@ -62,7 +62,7 @@ public class ParkingBoyTest {
         Ticket wrongTicket = new Ticket();
 
         //when
-        wrongTicket.setWrong(true);
+        wrongTicket.setTicketWrong(true);
         parkingBoy.park(car);
 
         //then
@@ -82,7 +82,7 @@ public class ParkingBoyTest {
         Ticket hadUsedTicket = new Ticket();
 
         //when
-        hadUsedTicket.setUsed(true);
+        hadUsedTicket.setTicketUsed(true);
         parkingBoy.park(car);
 
         //then
@@ -157,7 +157,7 @@ public class ParkingBoyTest {
         Ticket wrongTicket = new Ticket();
 
         //when
-        wrongTicket.setWrong(true);
+        wrongTicket.setTicketWrong(true);
         parkingBoy.park(car);
 
         //then
@@ -179,7 +179,7 @@ public class ParkingBoyTest {
         Ticket wrongTicket = new Ticket();
 
         //when
-        wrongTicket.setUsed(true);
+        wrongTicket.setTicketUsed(true);
         parkingBoy.park(car);
 
         //then
