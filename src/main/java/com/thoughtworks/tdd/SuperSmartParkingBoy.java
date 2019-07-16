@@ -13,19 +13,21 @@ public class SuperSmartParkingBoy extends ParkingBoy{
 
     @Override
     public Ticket park(Car car) throws NotPositionEnoughException {
-        List<ParkingLot> parkingLotByCarExist = this.getParkingLots().stream()
-                .filter(x -> x.getParkingCarTicketContainsValue(car))
-                .collect(Collectors.toList());
-        double minQuantity = this.getParkingLots().stream()
-                .mapToDouble(x-> x.getParkedQuantity() * 1.0/x.getCapacity())
-                .min().orElse(-1);
-        List<ParkingLot> parkingLotByParkCar = this.getParkingLots().stream()
+        List<ParkingLot> parkingLotByCarExist = this.getParkingLotByCarExist(car);
+        double minQuantity = getMinQuantity();
+        List<ParkingLot> parkingLotByParkCar = getParkingLotByParkCar(minQuantity);
+        return this.doesCarPark(car,parkingLotByCarExist, parkingLotByParkCar);
+    }
+
+    private List<ParkingLot> getParkingLotByParkCar(double minQuantity) {
+        return this.getParkingLots().stream()
                 .filter(x -> x.getParkedQuantity() < x.getCapacity() && x.getParkedQuantity() * 1.0/x.getCapacity() == minQuantity)
                 .collect(Collectors.toList());
-        if (super.doseCarParkInParkingLog(car, parkingLotByCarExist, parkingLotByParkCar)) {
-            return parkingLotByParkCar.get(0).park(car);
-        } else {
-            throw new NotPositionEnoughException("Not enough position.");
-        }
+    }
+
+    private double getMinQuantity() {
+        return this.getParkingLots().stream()
+                .mapToDouble(x-> x.getParkedQuantity() * 1.0/x.getCapacity())
+                .min().orElse(-1);
     }
 }

@@ -13,20 +13,22 @@ public class SmartParkingBoy extends ParkingBoy{
 
     @Override
     public Ticket park(Car car) throws NotPositionEnoughException {
-        List<ParkingLot> parkingLotByCarExist = this.getParkingLots().stream()
-                .filter(x -> x.getParkingCarTicketContainsValue(car))
+        List<ParkingLot> parkingLotByCarExist = this.getParkingLotByCarExist(car);
+        int minQuantity = getMinQuantity();
+        List<ParkingLot> parkingLotByParkCar = getParkLotByParkCar(minQuantity);
+        return this.doesCarPark(car,parkingLotByCarExist, parkingLotByParkCar);
+    }
+
+    private List<ParkingLot> getParkLotByParkCar(int minQuantity) {
+        return this.getParkingLots().stream()
+                .filter(x -> x.getParkedQuantity() < x.getCapacity() && x.getParkedQuantity() == minQuantity)
                 .collect(Collectors.toList());
-        int minQuantity = this.getParkingLots().stream()
+    }
+
+    private int getMinQuantity() {
+        return this.getParkingLots().stream()
                 .filter(x -> x.getParkedQuantity() < x.getCapacity())
                 .mapToInt(ParkingLot::getParkedQuantity)
                 .min().orElse(-1);
-        List<ParkingLot> parkingLotByParkCar = this.getParkingLots().stream()
-                .filter(x -> x.getParkedQuantity() < x.getCapacity() && x.getParkedQuantity() == minQuantity)
-                .collect(Collectors.toList());
-        if (super.doseCarParkInParkingLog(car, parkingLotByCarExist, parkingLotByParkCar)) {
-            return parkingLotByParkCar.get(0).park(car);
-        } else {
-            throw new NotPositionEnoughException("Not enough position.");
-        }
     }
 }
