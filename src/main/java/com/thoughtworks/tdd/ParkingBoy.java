@@ -26,11 +26,15 @@ public class ParkingBoy {
         List<ParkingLot> parkingLotByParkCar = parkingLots.stream()
                 .filter(x -> x.getParkedQuantity() < x.getCapacity())
                 .collect(Collectors.toList());
-        if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
+        if (doseCarParkInParkingLog(car, parkingLotByCarExist, parkingLotByParkCar)) {
             return parkingLotByParkCar.get(0).park(car);
         } else {
             throw new NotPositionEnoughException("Not enough position.");
         }
+    }
+
+    public boolean doseCarParkInParkingLog(Car car, List<ParkingLot> parkingLotByCarExist, List<ParkingLot> parkingLotByParkCar) {
+        return car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0;
     }
 
     public Car fetch(Ticket ticket) throws Exception{
@@ -39,10 +43,14 @@ public class ParkingBoy {
                 .collect(Collectors.toList());
         if (ticket == null) {
             throw new NoTicketProvideException("Please provide your parking ticket.");
-        } else if (ticket.isTicketWrong() || ticket.isTicketUsed()){
+        } else if (isTicketHasWrong(ticket)){
             throw new UnrecognizedTicketException("Unrecognized parking ticket.");
         } else {
             return parkingLotByCar.get(0).getCar(ticket);
         }
+    }
+
+    private boolean isTicketHasWrong(Ticket ticket) {
+        return ticket.isTicketWrong() || ticket.isTicketUsed();
     }
 }

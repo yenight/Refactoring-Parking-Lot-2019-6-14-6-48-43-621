@@ -22,7 +22,7 @@ public class SuperSmartParkingBoy extends ParkingBoy{
         List<ParkingLot> parkingLotByParkCar = this.getParkingLots().stream()
                 .filter(x -> x.getParkedQuantity() < x.getCapacity() && x.getParkedQuantity() * 1.0/x.getCapacity() == minQuantity)
                 .collect(Collectors.toList());
-        if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
+        if (super.doseCarParkInParkingLog(car, parkingLotByCarExist, parkingLotByParkCar)) {
             return parkingLotByParkCar.get(0).park(car);
         } else {
             throw new NotPositionEnoughException("Not enough position.");
